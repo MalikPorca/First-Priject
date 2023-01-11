@@ -1,100 +1,117 @@
 
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, Button, TextInput, Text, View, Pressable, SectionList,  } from "react-native";
+import { SafeAreaView, StyleSheet, Button, TextInput, Text, View, Pressable, SectionList, ImageBackground,  } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { setTextRange } from 'typescript';
-import CheckBox from '@react-native-community/checkbox';
+
 
 const Input = () => {
   const [text, onChangeText] = React.useState("");
-   const [text2, onChangeText2] = React.useState([]);
-
-   function SubmmitANDClear  (){
-     text2.push(text)
+   let [toDoList, setToDoList] = React.useState<string[]>([]);
+//Dodoavanje elemenata u listu
+   function submit  (){
+     toDoList.push(text)
+     if(text=="")console.error("Empty task, please write something")
     onChangeText("")
     }
-
-    function clearAll  (){
-      text2.splice(text, 60)
-      onChangeText(text + " ")
-     }
-    
-
-    const del=(key)=>{
-           text2.splice(text2[key], 1)
-          onChangeText(text + " ")
-      }
+//Brisaje cijele liste
+    const clearAll=(i:number)=>setToDoList([])
+     
+//brisajne pojedinih elemenata iz liste
+    const deleteItem=(index)=>setToDoList(toDoList.filter((_,i)=>i!==index))
     
   return (
-    <SafeAreaView style={{justifyContent:'space-between',flexDirection:'column',}}>
-      <TextInput
-        style={styles.input}
-         defaultValue={text}
-        onChange={(e) => onChangeText(e.nativeEvent.text)}
-      />      
-       <Button
-       title="Submmit"
-       color={"#f194ff"}
-       onPress ={SubmmitANDClear}
-       /> 
-        
-       {text2.map((task, i)=>(
-         <Pressable style={styles.button}  >
-          <CheckBox
-              value={state.vue}
-              onValueChange={value =>
-                setState({
-                  ...state,
-                  vue: value,
-                })
-              }
-            />
-         <Text
-         style={{backgroundColor: 'black',color: "white", borderColor: "black", borderWidth: 1,  marginTop: 25, width: 320, height: 50,  textAlign: "left" , paddingLeft:10, justifyContent:'space-between', flexDirection:'row',}}
-         key={i}
-         >
-        {task+"             "}
-       
-
-        <Button 
-        key={i}
-        title='X'
-        color={"red"} 
-        onPress={del}
-        ></Button>
-        </Text> 
-        
-        </Pressable>
-        
-      ))}
-      
-        
- <Button
-        title='Clear'
-        onPress={clearAll}
-        ></Button>
-    </SafeAreaView>   
     
+    <SafeAreaView style={styles.body}>
+      
+      <TextInput
+       style={styles.input}
+       defaultValue={text}
+       onChange={(e) => onChangeText(e.nativeEvent.text)}/>      
+        <Button
+          title="Submit"
+          color={"#d40202"}
+          onPress ={submit}/> 
+        
+          {toDoList.map((text, index)=>(
+      <View style={styles.text} key={index} >   
+        <Text style={styles.text} key={index} >
+          {text+"             "}
+        </Text> 
+
+        <View style={styles.button}>
+         <Button 
+           key={index}
+           title='X'
+           color={"#e60404"} 
+            //onPress={(parameter)=>{}}
+           onPress={()=>deleteItem(index)}/>
+        </View>
+      
+      </View>
+     ))}
+  
+      <View style={styles.ClearButton}>
+       <Button
+          title='                                  Clear                                  '
+          color={"#800000"}
+          onPress={()=>clearAll(1)}          
+          />
+      </View>
+    </SafeAreaView>       
   );
 };
 
 const styles = StyleSheet.create({
+ body: {
+  marginTop:40,
+  margin: 20,  
+  backgroundColor:"#fd0000",
+  borderRadius:20,
+  shadowOpacity:20,
+  shadowColor:"black",
+ },
+ 
+ text:{
+  backgroundColor: 'black',
+  color: "white",
+  fontSize:18,
+  marginLeft:10,  
+  margin: 22,
+  width: 295, 
+  height: 30, 
+  flex:10,
+  textAlign: "center" , 
+  alignItems:"center" ,
+  justifyContent:'space-between', 
+  flexDirection:'row'
+},
+ 
   input: {
     height: 50,
     margin: 12,
-    marginTop: 65,
+    marginTop: 35,
     borderWidth: 1,
     padding: 10,
-    borderRadius:20
+    borderRadius:20,
+    color:"white",
+    fontSize:22,
+    backgroundColor:"#450",
+
   },
     button: {
-      alignItems: 'center',
-      justifyContent: 'flex-end',  
-      position:'relative'
+      flex:1,
+      textAlign: "center" , 
+      alignItems:"center" ,
+      justifyContent:'space-between', 
+      flexDirection:'row',       
       
-     
-      
-      
+    },
+    ClearButton: {
+      textAlign: "center" , 
+      alignItems:"center" ,
+      margin:20,
+      marginLeft:21,        
     },
 });
 
