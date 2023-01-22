@@ -1,21 +1,36 @@
 
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import React, { Component } from 'react';
 import { SafeAreaView,Image, StyleSheet, Button, TextInput, Text, View, ScrollView, RefreshControl, TouchableOpacity, ToastAndroid, Pressable, Alert, Modal, ImageBackground  } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Colors, Header } from "react-native/Libraries/NewAppScreen";
 // import { setTextRange } from 'typescript';
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MalikButton from './CustomButton';
+import CriptoValute from './modal';
+import Taskovi from './tasksOfToDo';
+import ReadPage2 from './page3';
+import ReadPage from './page2';
 
 
-const Input = () => {
+const Input = ({navigation}) => {
   let [text, onChangeText] = React.useState("");
    let [toDoList, setToDoList] = React.useState<string[]>([]);
    let [edit, onChangeEdit] = React.useState(false);
    const [refresh, setRefresh]= React.useState(false);
    let [pressed, setPressed]= React.useState(false);
    const[showCripto, setShowCripto]= React.useState(false);
+   
+   
+   
+   
    //Dodoavanje elemenata u listu
    function submit  (){
     if(text.length<=3)Alert.alert("Greška","Morate unijet vise od 3 znaka!", [{text:"ok"}])
-     else toDoList.push(text)
+     else
+     toDoList.push(text)
   if(text==" ")ToastAndroid.show("Empty task, please write something",ToastAndroid.SHORT) 
    else null
  onChangeText(" ");
@@ -28,8 +43,8 @@ const Input = () => {
    }
 
 
-    const showEdit=(nativeEvent)=>{
-     onChangeEdit(edit!=edit)
+    const showEdit=()=>{
+     navigation.navigate("messages");
     }
 //Brisaje cijele liste
     const clearAll=(i:number)=>setToDoList([])
@@ -50,58 +65,33 @@ const Input = () => {
     style={styles.backgroundImage}
     >
     <SafeAreaView style={styles.body}>
+{/* ---------------------------------------------
+             prozor za kripto valute               */}
+      <Modal    
+        transparent={true}
+        visible={showCripto} 
+        onRequestClose={()=>setShowCripto(false)}>
+         <CriptoValute
+            showCriptoPage={showCriptoPage}/>
+      </Modal> 
+{/* --------------------------------------------------- */}
+{/*      
 
-      <Modal
-      
-      transparent={true}
-      visible={showCripto} 
-      onRequestClose={()=>setShowCripto(false)}
-      >
-        <View style={[{backgroundColor:"#00000029"}]}>
-          <View style={styles.kripto}>
-            <ImageBackground
-            style={styles.bcgImage}
-            source={require("./assets/pozadina.jpg")}
-            
-            >
+ovo nisam uspio trebam malo ispitati
+        <Taskovi
+        refresh={refresh}
+        onChange3={(e) => onChangeText(e.nativeEvent.text)}
+        onRefresh={Refresh}
+        submit={submit}
+       
+       OnPress2={deleteItem}
+        showCriptoPage={showCriptoPage}
         
-         <Text style={styles.headertext}>Kripto valute</Text>
-      
-        </ImageBackground>
-        <ScrollView 
-        fadingEdgeLength={300}
-
-        >
-        <View style={styles.middle}>
-        <Text style={styles.middletext}>Kroz dugu historiju ljudske zajednice novac je poprimio različite forme, a kriptovalute su njegovo najnovije izdanje. Ovaj rad ima za cilj predstaviti kriptovalute, kako one funkcioniraju, koje su njihove prednosti i nedostaci i kako ih islamsko pravo tretira.
-Za razumijevanje suštine kriptovaluta neophodno je shvatiti nekoliko ključnih termina, kao što su blockchain, privatni ključevi, elektronski novčanici, rudarenje i sl..
-Jedan dio islamskih učenjaka, stanovišta je da je novac ekskluzivan naziv za zlato i srebro. Kovanice od drugih metala mimo zlata i srebra, čija je nominalna vrijednost veća od stvarne, ova skupina ne smatra novcem i tretira ih robom. Drugi dio učenjaka novcem naziva sve što se koristi kao platno sredstvo pri razmjeni dobara, radilo se o zlatu, srebru, bakru, papiru ili bilo čemu drugom ukoliko bude opće prihvaćeno kao platno sredstvo.
-Islamski učenjaci jednoglasni su u stavu da je kovanje novca mimo legitimne državne kovaonice zabranjeno ukoliko predstavlja stvarnu i realnu štetu po zajednicu, a kada je šteta moguća, ali nije stvarna, islamski učenjaci po pitanju izdavanja i štampanja novca od strane drugih, mimo vlasti imaju dva oprečna mišljenja.
-Većina savremenih učenjaka stanovišta je da su kriptovalute, poput Bitcoina, zabranjene, znatan dio njih ostao je suzdržan, a manji dio učenjaka smatra kriptovalute dozvoljenim, uz određene uvjete.
-Osnovni argumenti zabrane su činjenica da kriptovalute ne izdaje i ne regulira država, obavijene su velom nepoznanica, 
-pospješuju nelegalne aktivnosti i crno tržište, nestabilne su i ophođenje njima liči hazardu i kocki. Dozvola kriptovaluta bazira se na univerzalnom pravilu da je svaka stvar u osnovi dozvoljena sve dok validan argument ne potvrdi suprotno te činjenici da su one postale vrijedna imovina i da obavljaju funkciju novca.
-        </Text>
-        </View>
-        </ScrollView>
-        <View style={styles.footer}>
-       
-      
-          <View>
-          <Pressable
-          onPress={showCriptoPage}
-          >
-            <Text style={styles.footerbutton}>
-              cancel
-            </Text>
-          </Pressable>
-          </View>
-        </View>
-       
-        </View>
-        </View>
-      </Modal>
-     
-      <ScrollView
+        showEdit={showEdit}
+        clearAll={clearAll}
+         /> */}
+    
+       <ScrollView
       refreshControl={<RefreshControl
       refreshing={refresh}
       onRefresh={Refresh}
@@ -148,7 +138,7 @@ pospješuju nelegalne aktivnosti i crno tržište, nestabilne su i ophođenje nj
            key={index}
            title='Edit'
            color={"#e60404"} 
-           onPress={()=>showEdit(text)}/>
+           onPress={showEdit}/>
         </View>
       
       </View>
@@ -162,22 +152,91 @@ pospješuju nelegalne aktivnosti i crno tržište, nestabilne su i ophođenje nj
           />
       </View>
 
-     
-      </ScrollView>
-      <View>
-      <Pressable
-       onPress ={submit}
-       hitSlop={3}>
-            <Text style={styles.plus}>
-              +
-            </Text>
-          </Pressable>
+      </ScrollView> 
+      
+     {/* unikatno dugme */}
+     {/* ---------------------------------------------- */}
+     <View>
+        <MalikButton onPressFunction={submit}/>
       </View>
      
     </SafeAreaView> 
     </ImageBackground>      
   );
 };
+
+
+//-------------------------------------------------------------
+
+
+
+const Tab= createMaterialBottomTabNavigator();
+
+function App(){
+  return(
+    <NavigationContainer>
+      <Tab.Navigator
+      screenOptions={({route})=>({
+        tabBarIcon:({focused, size, color})=>{
+          let iconName;
+          if (route.name==="ToDoList"){
+            iconName="bars";
+            size = focused? 20:25
+            color=focused? "#fff": "black"
+
+          } else if (route.name==="messages"){
+            iconName="comments-dollar";
+            size =focused? 20:25
+            color=focused? "#fff": "black"
+            
+
+          } else if (route.name==="Mail"){
+            iconName="envelope-open-text";
+            size =focused? 20:25
+            color=focused? "#fff": "black"
+
+          }
+          return(
+            <FontAwesome5
+            name={iconName}
+            size={size}
+            color={color}
+            />
+          )
+        }
+
+      })} 
+      // tabBarOptions={{
+      //   activeBackgroundColor:"red",
+      //   showLabel:true,
+      //   labelStyle:{fontSize:12, color:"black"},
+      // }}
+      // activeColor="black"
+      // inactiveColor="#999"
+      barStyle={{backgroundColor:"#cc0000"}}
+      >
+        
+        
+        <Tab.Screen
+        name="ToDoList"
+        component={Input}
+        // options={
+        //   {header: () => null}
+        // } 
+        />
+        <Tab.Screen
+        name="messages"
+        component={ReadPage}
+        />
+        <Tab.Screen
+        name="Mail"
+        component={ReadPage2}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+    
+  )
+}
 
 const styles = StyleSheet.create({
   backgroundImage:{
@@ -294,5 +353,5 @@ const styles = StyleSheet.create({
 
 
 
-export default Input; 
+export default App; 
 
