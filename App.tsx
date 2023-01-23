@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import React, { Component } from 'react';
@@ -5,14 +6,17 @@ import { SafeAreaView,Image, StyleSheet, Button, TextInput, Text, View, ScrollVi
 import { Colors, Header } from "react-native/Libraries/NewAppScreen";
 // import { setTextRange } from 'typescript';
 import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MalikButton from './CustomButton';
 import CriptoValute from './modal';
 import Taskovi from './tasksOfToDo';
 import ReadPage2 from './page3';
 import ReadPage from './page2';
+import { FullWindowOverlay } from 'react-native-screens';
+import { color } from 'react-native-reanimated';
+import { HeaderTitle } from '@react-navigation/elements';
 
 
 const Input = ({navigation}) => {
@@ -172,12 +176,12 @@ ovo nisam uspio trebam malo ispitati
 
 const Tab= createMaterialBottomTabNavigator();
 
-function App(){
+function BottomTab(){
   return(
     <NavigationContainer>
-      <Tab.Navigator
-      screenOptions={({route})=>({
-        tabBarIcon:({focused, size, color})=>{
+       <Tab.Navigator useLegacyImplementation={true}
+          screenOptions={({route})=>({
+        TabBarIcon:({focused, size, color})=>{
           let iconName;
           if (route.name==="ToDoList"){
             iconName="bars";
@@ -206,7 +210,7 @@ function App(){
         }
 
       })} 
-      // tabBarOptions={{
+      // TabBarOptions={{
       //   activeBackgroundColor:"red",
       //   showLabel:true,
       //   labelStyle:{fontSize:12, color:"black"},
@@ -233,6 +237,92 @@ function App(){
         component={ReadPage2}
         />
       </Tab.Navigator>
+    </NavigationContainer>
+    
+  )
+}
+const Drawer= createDrawerNavigator();
+
+function App(){
+  return(
+    <NavigationContainer>
+       <Drawer.Navigator 
+       
+       useLegacyImplementation={true}
+       screenOptions={{
+        swipeEdgeWidth:100,
+        drawerActiveBackgroundColor:"red",
+        drawerInactiveBackgroundColor:"#ff000090",
+        // drawerHideStatusBarOnOpen:true,
+       drawerStyle:{
+        backgroundColor: '#202020bb',
+        width: 270,
+      },
+      drawerType:'front',
+      swipeEnabled:true,
+      headerStyle:{
+        backgroundColor:"#bb0000",
+        height:70, 
+      },
+      headerTintColor:"white"
+
+       }}
+      
+       >
+   
+        <Drawer.Screen
+        name="ToDoList"
+        component={Input}
+        options={
+          {
+          
+            headerTitleStyle:{
+              color:"white"
+            },
+            drawerIcon:()=>(
+              <FontAwesome5 
+              name="bars"
+              size={20}
+              />
+        
+            )
+          }
+         } 
+        />
+        
+        <Drawer.Screen
+        name="messages"
+        component={ReadPage}
+        options={
+          {
+            drawerIcon:()=>(
+              <FontAwesome5 
+              name="comments-dollar"
+              size={20}
+              
+              />
+     
+            )
+          }
+         } 
+        />
+        <Drawer.Screen
+        name="Mail"
+        component={ReadPage2}
+        options={
+          {
+            drawerIcon:()=>(
+              <FontAwesome5 
+              name="envelope-open-text"
+              size={20}
+              
+              />
+  
+            )
+          }
+         } 
+        />
+      </Drawer.Navigator>
     </NavigationContainer>
     
   )
