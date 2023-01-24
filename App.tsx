@@ -251,16 +251,18 @@ function App(){
        useLegacyImplementation={true}
        screenOptions={{
         swipeEdgeWidth:100,
-        drawerActiveBackgroundColor:"red",
-        drawerInactiveBackgroundColor:"#ff000090",
+        drawerActiveBackgroundColor:"#5099ff",
+        drawerInactiveBackgroundColor:"#0000ff",
         // drawerHideStatusBarOnOpen:true,
        drawerStyle:{
-        backgroundColor: '#202020bb',
+        backgroundColor: '#202020aa',
         width: 270,
       },
       drawerType:'front',
       swipeEnabled:true,
+      
       headerStyle:{
+        
         backgroundColor:"#bb0000",
         height:70, 
       },
@@ -291,10 +293,14 @@ function App(){
         />
         
         <Drawer.Screen
-        name="messages"
+        name="Novosti"
         component={ReadPage}
         options={
           {
+            headerTintColor:"white",
+            headerStyle:{
+              backgroundColor:"#3030ff"
+            },
             drawerIcon:()=>(
               <FontAwesome5 
               name="comments-dollar"
@@ -307,13 +313,19 @@ function App(){
          } 
         />
         <Drawer.Screen
-        name="Mail"
+        name="Fokus    "
         component={ReadPage2}
+        
         options={
           {
+            headerTintColor:"white",
+            headerStyle:{
+              backgroundColor:"#3030ff"
+            },
             drawerIcon:()=>(
               <FontAwesome5 
               name="envelope-open-text"
+              
               size={20}
               
               />
