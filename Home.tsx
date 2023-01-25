@@ -14,14 +14,27 @@ const  [click, setClick] = React.useState (false)
 let [item, setItem] = React.useState("");  
 const  [itemList, setItemList] = React.useState ([]);
 
+let [story, setStory] = React.useState("");  
+const  [storyList, setStoryList] = React.useState ([]);
+
+//--------------------dodavanje bouble--------------------------
   const onPressFunction1 = () =>{
       setClick(!click)
   }
 
   const addNew =(item)=>{
-     itemList.push(...itemList, item)
+     itemList.push(item)
       setItem(item)
   }
+
+  //------------------dodavanje story---------------------------
+  const addNewStory =(story)=>{
+    storyList.push(story)
+     setStory(story)
+ }
+
+
+
     return(
 
       <SafeAreaView>
@@ -58,22 +71,23 @@ const  [itemList, setItemList] = React.useState ([]);
     
       <ScrollView horizontal={true} style={[{height:610, backgroundColor:"white", borderRadius:10,padding:2, borderLeftWidth:2, marginBottom:10,borderColor:"#dddddd90", borderBottomWidth:2, borderRightWidth:2,}]}
       >
-         <Pressable onPress={onPressFunction1}>
-        <Text style={styles.blocktext}> 
-        <ImageBackground
-            style={styles.ImageStory}
-            source={require("./assets/predavanje1.jpg")} 
-            ></ImageBackground>
+         <Pressable onPress={addNewStory}>
+        <Text style={styles.blocktext}>
+          +
         </Text>
         </Pressable>
-        <Pressable onPress={onPressFunction1}>
+            {storyList.map((story, index)=>(
+              <Pressable onPress={onPressFunction1}>
         <Text style={styles.blocktext}><ImageBackground
             style={styles.ImageStory}
             source={require("./assets/predavanje2.jpg")} 
             ></ImageBackground>
             </Text>
             </Pressable>
-            <Pressable onPress={onPressFunction1}>
+            ))}
+    
+
+            {/* <Pressable onPress={onPressFunction1}>
         <Text style={styles.blocktext}>
         <ImageBackground
             style={styles.ImageStory}
@@ -95,7 +109,7 @@ const  [itemList, setItemList] = React.useState ([]);
             source={require("./assets/predavanje2.jpg")} 
             ></ImageBackground>
             </Text>
-            </Pressable>
+            </Pressable> */}
       </ScrollView>
      
         <Text style={styles.text}></Text>
@@ -210,8 +224,10 @@ const  [itemList, setItemList] = React.useState ([]);
       blocktext:{
         backgroundColor:"#dddddd",
         borderRadius:10,
-        fontSize:30,
-        color:"white",
+        fontSize:72,
+        textAlign:"center",
+       
+        color:"blue",
         height:110,
         width:92,
         margin:10,
