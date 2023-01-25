@@ -17,12 +17,16 @@ const  [itemList, setItemList] = React.useState ([]);
 let [story, setStory] = React.useState("");  
 const  [storyList, setStoryList] = React.useState ([]);
 
-//--------------------dodavanje bouble--------------------------
+let [Post, setPost] = React.useState("");  
+const  [PostList, setPostList] = React.useState ([]);
+
+//--------------------dodavanje bouble-------------------------
   const onPressFunction1 = () =>{
       setClick(!click)
+      
   }
 
-  const addNew =(item)=>{
+  const addNewBouble =(item)=>{
      itemList.push(item)
       setItem(item)
   }
@@ -32,20 +36,23 @@ const  [storyList, setStoryList] = React.useState ([]);
     storyList.push(story)
      setStory(story)
  }
-
-
+//------------------dodavanje texta------------------------------
+const addPost =(Post)=>{
+  PostList.push(Post)
+   setPost(Post)
+}
 
     return(
 
       <SafeAreaView>
         
-        
+{/*----------------------DODAVANJE BOUBLE-SA-----------------------  */}
         
         <ScrollView horizontal={true} style={[{height:110, backgroundColor:"white", borderBottomWidth:3, borderColor:"#dddddd90",}]}>
        
        
 
-        <Pressable onPress ={addNew}>
+        <Pressable onPress ={addNewBouble}>
         <ImageBackground
             style={styles.ImageBouble}
             source={require("./assets/fokus.png")} 
@@ -64,12 +71,14 @@ const  [storyList, setStoryList] = React.useState ([]);
 
 ))}
    
+{/*----------------------DODAVANJE STORY-JA--------------------------  */}
+
         </ScrollView>
    
-     <ScrollView>
+        <ScrollView>
       <View style={styles.middle}>
-    
-      <ScrollView horizontal={true} style={[{height:610, backgroundColor:"white", borderRadius:10,padding:2, borderLeftWidth:2, marginBottom:10,borderColor:"#dddddd90", borderBottomWidth:2, borderRightWidth:2,}]}
+            <View>
+      <ScrollView horizontal={true} style={[{height:150, backgroundColor:"white", borderRadius:10,padding:2, borderLeftWidth:2, marginBottom:10,borderColor:"#dddddd90", borderBottomWidth:2, borderRightWidth:2,}]}
       >
          <Pressable onPress={addNewStory}>
         <Text style={styles.blocktext}>
@@ -78,7 +87,7 @@ const  [storyList, setStoryList] = React.useState ([]);
         </Pressable>
             {storyList.map((story, index)=>(
               <Pressable onPress={onPressFunction1}>
-        <Text style={styles.blocktext}><ImageBackground
+        <Text style={styles.blocktext} key={index}><ImageBackground
             style={styles.ImageStory}
             source={require("./assets/predavanje2.jpg")} 
             ></ImageBackground>
@@ -86,46 +95,29 @@ const  [storyList, setStoryList] = React.useState ([]);
             </Pressable>
             ))}
     
+      </ScrollView>
+      </View>
+{/*----------------------DODAVANJE POSTOVA------------------------------  */}
 
-            {/* <Pressable onPress={onPressFunction1}>
-        <Text style={styles.blocktext}>
-        <ImageBackground
-            style={styles.ImageStory}
-            source={require("./assets/predavanje3.jpg")} 
-            ></ImageBackground>
-        </Text>
-        </Pressable>
-        <Pressable onPress={onPressFunction1}>
-        <Text style={styles.blocktext}>
-        <ImageBackground
-            style={styles.ImageStory}
-            source={require("./assets/predavanje3.jpg")} 
-            ></ImageBackground>
-        </Text>
-        </Pressable>
-        <Pressable onPress={onPressFunction1}>
-        <Text style={styles.blocktext}><ImageBackground
-            style={styles.ImageStory}
-            source={require("./assets/predavanje2.jpg")} 
-            ></ImageBackground>
+      <View style={styles.middle}>
+    
+        <Text style={styles.addtext}>
+          <Pressable onPress={addPost}>
+            <Text style={[{color:"blue", fontSize:25, fontWeight:"bold", backgroundColor:"#ddddddff", borderRadius:10,marginLeft:2, marginRight:2,}]} >
+              Add    
             </Text>
-            </Pressable> */}
-      </ScrollView>
-     
-        <Text style={styles.text}></Text>
-        <Text style={styles.text}> </Text>
-        <Text style={styles.text}></Text>
-        <Text style={styles.text}></Text>
-        <Text style={styles.text}></Text>
-      
-      
-      </View>
-      </ScrollView>
-      <View style={styles.footer}>
-        <Text style={styles.footertext}>
-          Fokus
+          </Pressable>
         </Text>
+        
+        {PostList.map((Post, index)=>(
+          <Text style={styles.text}  key={index}> </Text>
+        ))}
+
       </View>
+
+      </View>
+      </ScrollView>
+    
       <Modal    
         transparent={false}
         visible={click} 
@@ -149,7 +141,7 @@ const  [storyList, setStoryList] = React.useState ([]);
         fontSize:18,
         padding:7,
         marginBottom: 10,
-        width: "99%", 
+        width: "100%", 
         height: 240, 
         borderRadius:10,
         textAlign: "center" , 
@@ -159,6 +151,25 @@ const  [storyList, setStoryList] = React.useState ([]);
          borderBottomWidth:2,
           borderRightWidth:2,
           borderLeftWidth:2,
+      },
+      addtext:{
+       
+          backgroundColor: '#fff',
+          color: "white",
+          fontSize:18,
+          padding:7,
+          marginBottom: 10,
+          width: "100%", 
+          height: 50, 
+          borderRadius:10,
+          textAlign: "left" , 
+          alignItems:"center" ,
+          flexDirection:'row',
+          borderColor:"#dddddd90",
+           borderBottomWidth:2,
+            borderRightWidth:2,
+            borderLeftWidth:2,
+        
       },
       ImageBouble:{
         
@@ -232,16 +243,5 @@ const  [storyList, setStoryList] = React.useState ([]);
         width:92,
         margin:10,
       },
-      footer:{
-        backgroundColor:"#5050ff",
-        height:"10%",
-        
-      },
-      footertext:{
-        textAlign:"center",
-        color:"white",
-        fontSize:22,
-        fontWeight:"bold",
-        margin:15,
-      },
+    
 });
