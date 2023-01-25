@@ -10,10 +10,17 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 export default function ReadPage2 ({navigation}, props)  {
 const  [click, setClick] = React.useState (false)
-const  [item, setItem] = React.useState ([])
+
+let [item, setItem] = React.useState("");  
+const  [itemList, setItemList] = React.useState ([]);
 
   const onPressFunction1 = () =>{
       setClick(!click)
+  }
+
+  const addNew =(item)=>{
+     itemList.push(...itemList, item)
+      setItem(item)
   }
     return(
 
@@ -22,34 +29,28 @@ const  [item, setItem] = React.useState ([])
         
         
         <ScrollView horizontal={true} style={[{height:110, backgroundColor:"white", borderBottomWidth:3, borderColor:"#dddddd90",}]}>
-          
-        <Pressable onPress ={onPressFunction1}>
+       
+       
+
+        <Pressable onPress ={addNew}>
         <ImageBackground
             style={styles.ImageBouble}
             source={require("./assets/fokus.png")} 
             >
-        
-        <Text style={[{fontSize:20, color:"white", textAlign:"center", margin:9,}]}></Text>
+        <Text style={[{fontSize:20, color:"white", textAlign:"center", margin:9,}]}>
+
+        </Text>
         </ImageBackground>
            </Pressable>
-            
-          <Pressable onPress ={onPressFunction1}
-          ><Text style={styles.booble}></Text></Pressable>
 
-          <Pressable onPress ={onPressFunction1}
-            ><Text style={styles.booble}></Text></Pressable>
+           {itemList.map((item, index)=>(
+            <Pressable onPress ={onPressFunction1}
+          >
+            <Text style={styles.booble} key= {index}>
+            </Text></Pressable>
 
-         <Pressable onPress ={onPressFunction1}
-          ><Text style={styles.booble}></Text></Pressable>
-
-          <Pressable onPress ={onPressFunction1}
-          ><Text style={styles.booble}></Text></Pressable>
-
-          <Pressable onPress ={onPressFunction1}
-          ><Text style={styles.booble}></Text></Pressable>
-          
-          <Pressable onPress ={onPressFunction1}
-          ><Text style={styles.booble}></Text></Pressable>
+))}
+   
         </ScrollView>
    
      <ScrollView>
@@ -57,54 +58,51 @@ const  [item, setItem] = React.useState ([])
     
       <ScrollView horizontal={true} style={[{height:610, backgroundColor:"white", borderRadius:10,padding:2, borderLeftWidth:2, marginBottom:10,borderColor:"#dddddd90", borderBottomWidth:2, borderRightWidth:2,}]}
       >
-        
+         <Pressable onPress={onPressFunction1}>
         <Text style={styles.blocktext}> 
         <ImageBackground
             style={styles.ImageStory}
             source={require("./assets/predavanje1.jpg")} 
             ></ImageBackground>
         </Text>
-
+        </Pressable>
+        <Pressable onPress={onPressFunction1}>
         <Text style={styles.blocktext}><ImageBackground
             style={styles.ImageStory}
             source={require("./assets/predavanje2.jpg")} 
             ></ImageBackground>
             </Text>
+            </Pressable>
+            <Pressable onPress={onPressFunction1}>
         <Text style={styles.blocktext}>
         <ImageBackground
             style={styles.ImageStory}
             source={require("./assets/predavanje3.jpg")} 
             ></ImageBackground>
         </Text>
+        </Pressable>
+        <Pressable onPress={onPressFunction1}>
         <Text style={styles.blocktext}>
         <ImageBackground
             style={styles.ImageStory}
             source={require("./assets/predavanje3.jpg")} 
             ></ImageBackground>
         </Text>
+        </Pressable>
+        <Pressable onPress={onPressFunction1}>
         <Text style={styles.blocktext}><ImageBackground
             style={styles.ImageStory}
             source={require("./assets/predavanje2.jpg")} 
             ></ImageBackground>
             </Text>
-       
+            </Pressable>
       </ScrollView>
      
-        <Text style={styles.text}>
-          Dobro dosli!!! 
-        </Text>
-        <Text style={styles.text}>
-          Dobro dosli!!! 
-        </Text>
-        <Text style={styles.text}>
-          Dobro dosli!!! 
-        </Text>
-        <Text style={styles.text}>
-          Dobro dosli!!! 
-        </Text>
-        <Text style={styles.text}>
-          Dobro dosli!!! 
-        </Text>
+        <Text style={styles.text}></Text>
+        <Text style={styles.text}> </Text>
+        <Text style={styles.text}></Text>
+        <Text style={styles.text}></Text>
+        <Text style={styles.text}></Text>
       
       
       </View>
@@ -118,6 +116,11 @@ const  [item, setItem] = React.useState ([])
         transparent={false}
         visible={click} 
         >
+          <ImageBackground 
+        style={styles.bcgImage}
+        source={require("./assets/predavanje3.jpg")}>
+          
+         </ImageBackground>
          <CriptoValute
             cancel={onPressFunction1}/>
       </Modal> 
@@ -171,6 +174,14 @@ const  [item, setItem] = React.useState ([])
         borderColor:"#dddddd90",
 
         
+      },
+      bcgImage:{
+        width:280,
+        height:380,
+        margin:40,
+        
+      
+      
       },
       booble:{
         backgroundColor:"#dddddd30",

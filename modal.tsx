@@ -12,10 +12,9 @@ const[showCripto, setShowCripto]= React.useState(false);
 const cancel = ()=> setShowCripto(!showCripto)
 return(
 
-<View style={styles.middle}>
+<View >
     <ImageBackground
-    style={styles.bcgImage}
-    source={require("./assets/predavanje1.jpg")}
+    source={props.nesto}
     >
     </ImageBackground>
     <View style={styles.footerbutton}>
@@ -29,23 +28,13 @@ return(
      }
      const styles = StyleSheet.create({
           
-           bcgImage:{
-             width:280,
-             height:380,
-             margin:40
-           
-           
-           },
          
-           middle:{
-             backgroundColor:"#00000090",
-             height:"100%"
-             
-           },
+          
         
            footerbutton:{
             width:100,
-            marginLeft:133
+            marginLeft:133,
+            marginBottom:270
              
            },
            
