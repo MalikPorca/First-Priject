@@ -48,7 +48,7 @@ const addPost =(Post)=>{
         
 {/*----------------------DODAVANJE BOUBLE-SA-----------------------  */}
         
-        <ScrollView horizontal={true} style={[{height:110, backgroundColor:"white", borderBottomWidth:3, borderColor:"#dddddd90",}]}>
+        <ScrollView horizontal={true} style={[{height:110,width:"94%",marginLeft:"3%",borderRadius:10, backgroundColor:"white", borderBottomWidth:3, borderColor:"#dddddd90",}]}>
        
        
 
@@ -86,11 +86,11 @@ const addPost =(Post)=>{
         </Text>
         </Pressable>
             {storyList.map((story, index)=>(
-              <Pressable onPress={onPressFunction1}>
+              <Pressable onPress={onPressFunction1} >
         <Text style={styles.blocktext} key={index}><ImageBackground
             style={styles.ImageStory}
             source={require("./assets/predavanje2.jpg")} 
-            ></ImageBackground>
+            ></ImageBackground >
             </Text>
             </Pressable>
             ))}
@@ -119,7 +119,7 @@ const addPost =(Post)=>{
       </ScrollView>
     
       <Modal    
-        transparent={false}
+        
         visible={click} 
         >
           <ImageBackground 
@@ -159,7 +159,7 @@ const addPost =(Post)=>{
           fontSize:18,
           padding:7,
           marginBottom: 10,
-          width: "100%", 
+        
           height: 50, 
           borderRadius:10,
           textAlign: "left" , 
@@ -181,7 +181,6 @@ const addPost =(Post)=>{
       ImageStory:{
         height:110,
         width:92,
-        borderRadius:20,
       },
      
       middle:{
@@ -189,6 +188,7 @@ const addPost =(Post)=>{
         height:"75%",
         padding:10,
         paddingTop:20,
+        
   },
       boobles:{
         justifyContent:'space-between',
@@ -230,7 +230,7 @@ const addPost =(Post)=>{
         alignItems:'center',
         flexDirection:'row',
         backgroundColor:"#dddddd",
-      width:0,
+      
       },
       blocktext:{
         backgroundColor:"#dddddd",

@@ -10,13 +10,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MalikButton from './CustomButton';
-import CriptoValute from './modal';
-import Taskovi from './tasksOfToDo';
 import ReadPage2 from './Home';
 import ReadPage from './News';
-import { FullWindowOverlay } from 'react-native-screens';
-import { color } from 'react-native-reanimated';
-import { HeaderTitle } from '@react-navigation/elements';
+
 
 
 const Input = ({navigation}) => {
@@ -25,7 +21,7 @@ const Input = ({navigation}) => {
    let [edit, onChangeEdit] = React.useState(false);
    const [refresh, setRefresh]= React.useState(false);
    let [pressed, setPressed]= React.useState(false);
-   const[showCripto, setShowCripto]= React.useState(false);
+   
    
    
    
@@ -69,16 +65,7 @@ const Input = ({navigation}) => {
     style={styles.backgroundImage}
     >
     <SafeAreaView style={styles.body}>
-{/* ---------------------------------------------
-             prozor za kripto valute               */}
-      <Modal    
-        transparent={true}
-        visible={showCripto} 
-        onRequestClose={()=>setShowCripto(false)}>
-         <CriptoValute
-            showCriptoPage={showCriptoPage}/>
-      </Modal> 
-{/* --------------------------------------------------- */}
+
 {/*      
 
 ovo nisam uspio trebam malo ispitati
@@ -116,13 +103,7 @@ ovo nisam uspio trebam malo ispitati
        onPress={submit}
        /></View>
        )}    
-        <Button
-          title={!pressed? "O kripto valutama..." : "Oh.. hajde ponovo : )"}
-          color={"#d40202"}
-          onPress ={showCriptoPage}/> 
-
-         
-        
+      
           {toDoList.map((text, index)=>(
       <View style={styles.text} key={index} >   
         <Text style={styles.text} key={index} >
@@ -247,9 +228,10 @@ function App(){
   return(
     <NavigationContainer>
        <Drawer.Navigator 
-       
+       initialRouteName='Fokus'
        useLegacyImplementation={true}
        screenOptions={{
+        overlayColor:"#0000ff80", 
         swipeEdgeWidth:100,
         drawerActiveBackgroundColor:"#5099ff",
         drawerInactiveBackgroundColor:"#0000ff",
@@ -257,6 +239,7 @@ function App(){
        drawerStyle:{
         backgroundColor: '#202020aa',
         width: 270,
+        
       },
       drawerType:'front',
       swipeEnabled:true,
@@ -271,26 +254,30 @@ function App(){
        }}
       
        >
-   
-        <Drawer.Screen
-        name="ToDoList"
-        component={Input}
+    <Drawer.Screen
+        name="Fokus"
+        component={ReadPage2}
+        
         options={
           {
-          
-            headerTitleStyle:{
-              color:"white"
+
+            headerTintColor:"white",
+            headerStyle:{
+              backgroundColor:"#3030ff"
             },
             drawerIcon:()=>(
               <FontAwesome5 
-              name="bars"
+              name="envelope-open-text"
+              
               size={20}
+              
               />
-        
+  
             )
           }
          } 
         />
+        
         
         <Drawer.Screen
         name="Novosti"
@@ -312,24 +299,21 @@ function App(){
           }
          } 
         />
-        <Drawer.Screen
-        name="Fokus    "
-        component={ReadPage2}
-        
+       <Drawer.Screen
+        name="ToDoList"
+        component={Input}
         options={
           {
-            headerTintColor:"white",
-            headerStyle:{
-              backgroundColor:"#3030ff"
+          
+            headerTitleStyle:{
+              color:"white"
             },
             drawerIcon:()=>(
               <FontAwesome5 
-              name="envelope-open-text"
-              
+              name="bars"
               size={20}
-              
               />
-  
+        
             )
           }
          } 
