@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
-import {  Pressable, SafeAreaView,ImageBackground, StyleSheet, Text, View  } from "react-native";
-import { Colors, Header } from "react-native/Libraries/NewAppScreen";
-// import { setTextRange } from 'typescript';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {  Pressable, SafeAreaView,ImageBackground, StyleSheet, Text, View ,Button,} from "react-native";
+import StickyItemFlatList from '@gorhom/sticky-item';
 import CriptoValute from './modal';
-import { Modal } from 'react-native-paper';
-import { ScrollView } from 'react-native-gesture-handler';
+import {  Modal } from 'react-native-paper';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
-export default function ReadPage2 ({navigation}, props)  {
+export default function Home ({navigation}, props)  {
 const  [click, setClick] = React.useState (false)
+const  [Input, setInput] = React.useState (false)
+
 
 let [item, setItem] = React.useState("");  
 const  [itemList, setItemList] = React.useState ([]);
 
-let [story, setStory] = React.useState("");  
-const  [storyList, setStoryList] = React.useState ([]);
+const  [storyList, setStoryList] = React.useState([]);
+const  [storyText, OnChangeStoryText] = React.useState ("");
 
 let [Post, setPost] = React.useState("");  
 const  [PostList, setPostList] = React.useState ([]);
+
+
 
 //--------------------dodavanje bouble-------------------------
   const onPressFunction1 = () =>{
@@ -26,15 +27,20 @@ const  [PostList, setPostList] = React.useState ([]);
       
   }
 
+  const InsertImage=()=> setInput(!Input)
+
   const addNewBouble =(item)=>{
      itemList.push(item)
       setItem(item)
   }
 
   //------------------dodavanje story---------------------------
-  const addNewStory =(story)=>{
-    storyList.push(story)
-     setStory(story)
+  function addNewStory(){
+    let unos = storyText
+    storyList.push(unos)
+    setInput(!Input)
+    OnChangeStoryText(" ")
+   
  }
 //------------------dodavanje texta------------------------------
 const addPost =(Post)=>{
@@ -46,6 +52,7 @@ const addPost =(Post)=>{
 
       <SafeAreaView>
         
+      
 {/*----------------------DODAVANJE BOUBLE-SA-----------------------  */}
         
         <ScrollView horizontal={true} style={[{height:110,width:"94%",marginLeft:"3%",borderRadius:10, backgroundColor:"white", borderBottomWidth:3, borderColor:"#dddddd90",}]}>
@@ -74,23 +81,24 @@ const addPost =(Post)=>{
 {/*----------------------DODAVANJE STORY-JA--------------------------  */}
 
         </ScrollView>
-   
         <ScrollView>
       <View style={styles.middle}>
             <View>
       <ScrollView horizontal={true} style={[{height:150, backgroundColor:"white", borderRadius:10,padding:2, borderLeftWidth:2, marginBottom:10,borderColor:"#dddddd90", borderBottomWidth:2, borderRightWidth:2,}]}
       >
-         <Pressable onPress={addNewStory}>
-        <Text style={styles.blocktext}>
+         <Pressable onPress={InsertImage}>
+        <Text style={styles.blockPlus}>
           +
         </Text>
         </Pressable>
-            {storyList.map((story, index)=>(
-              <Pressable onPress={onPressFunction1} >
-        <Text style={styles.blocktext} key={index}><ImageBackground
+            {storyList.map((storyText, index)=>(
+              <Pressable onPress={onPressFunction1} key={index}>
+        <Text style={styles.blocktext} key={index}>
+          {/* <ImageBackground
             style={styles.ImageStory}
             source={require("./assets/predavanje2.jpg")} 
-            ></ImageBackground >
+            ></ImageBackground > */}
+            {storyText}
             </Text>
             </Pressable>
             ))}
@@ -110,7 +118,7 @@ const addPost =(Post)=>{
         </Text>
         
         {PostList.map((Post, index)=>(
-          <Text style={styles.text}  key={index}> </Text>
+          <Text style={styles.text}  key={index}> {storyText} </Text>
         ))}
 
       </View>
@@ -130,6 +138,16 @@ const addPost =(Post)=>{
          <CriptoValute
             cancel={onPressFunction1}/>
       </Modal> 
+      <Modal visible={Input} style={styles.inputPost}>
+          <View >
+            <TextInput
+            style={styles.Input}
+            placeholder={"   Današnja mudrost: "}
+            defaultValue={storyText}
+            onChange={(e) => OnChangeStoryText(e.nativeEvent.text)}/> 
+          </View>
+          <Button title='save' onPress={addNewStory}/>
+        </Modal>
       </SafeAreaView>
   )
   }
@@ -151,6 +169,25 @@ const addPost =(Post)=>{
          borderBottomWidth:2,
           borderRightWidth:2,
           borderLeftWidth:2,
+      },
+      inputPost:{
+        width:250,
+        height:380,
+        alignItems:"center",
+        textAlign:"start",
+        backgroundColor:"white",
+        margin:55,
+        borderRadius:10,
+        
+      },
+      Input:{
+        width:220,
+        height:300,
+        borderWidth:1,
+        borderColor:"black",
+        borderRadius:10,
+        marginBottom:20,
+        alignItems:"flex-start"
       },
       addtext:{
        
@@ -232,13 +269,22 @@ const addPost =(Post)=>{
         backgroundColor:"#dddddd",
       
       },
-      blocktext:{
+      blockPlus:{
         backgroundColor:"#dddddd",
         borderRadius:10,
         fontSize:72,
         textAlign:"center",
-       
         color:"blue",
+        height:110,
+        width:92,
+        margin:10,
+      },
+      blocktext:{
+        backgroundColor:"#9595dd",
+        padding:9,
+        borderRadius:10,
+        fontSize:12,
+        color:"white",
         height:110,
         width:92,
         margin:10,

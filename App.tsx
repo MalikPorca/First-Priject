@@ -10,7 +10,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MalikButton from './CustomButton';
-import ReadPage2 from './Home';
+import Home from './Home';
 import ReadPage from './News';
 
 
@@ -38,9 +38,7 @@ const Input = ({navigation}) => {
     
   }
    
-   const showCriptoPage=()=>{
-    setShowCripto(!showCripto)
-   }
+ 
 
 
     const showEdit=()=>{
@@ -155,42 +153,42 @@ ovo nisam uspio trebam malo ispitati
 
 
 
-const Tab= createMaterialBottomTabNavigator();
+// const Tab= createMaterialBottomTabNavigator();
 
-function BottomTab(){
-  return(
-    <NavigationContainer>
-       <Tab.Navigator useLegacyImplementation={true}
-          screenOptions={({route})=>({
-        TabBarIcon:({focused, size, color})=>{
-          let iconName;
-          if (route.name==="ToDoList"){
-            iconName="bars";
-            size = focused? 20:25
-            color=focused? "#fff": "black"
+// function BottomTab(){
+//   return(
+//     <NavigationContainer>
+//        <Tab.Navigator useLegacyImplementation={true}
+//           screenOptions={({route})=>({
+//         TabBarIcon:({focused, size, color})=>{
+//           let iconName;
+//           if (route.name==="ToDoList"){
+//             iconName="bars";
+//             size = focused? 20:25
+//             color=focused? "#fff": "black"
 
-          } else if (route.name==="messages"){
-            iconName="comments-dollar";
-            size =focused? 20:25
-            color=focused? "#fff": "black"
+//           } else if (route.name==="messages"){
+//             iconName="comments-dollar";
+//             size =focused? 20:25
+//             color=focused? "#fff": "black"
             
 
-          } else if (route.name==="Mail"){
-            iconName="envelope-open-text";
-            size =focused? 20:25
-            color=focused? "#fff": "black"
+//           } else if (route.name==="Mail"){
+//             iconName="envelope-open-text";
+//             size =focused? 20:25
+//             color=focused? "#fff": "black"
 
-          }
-          return(
-            <FontAwesome5
-            name={iconName}
-            size={size}
-            color={color}
-            />
-          )
-        }
+//           }
+//           return(
+//             <FontAwesome5
+//             name={iconName}
+//             size={size}
+//             color={color}
+//             />
+//           )
+//         }
 
-      })} 
+//       })} 
       // TabBarOptions={{
       //   activeBackgroundColor:"red",
       //   showLabel:true,
@@ -198,30 +196,30 @@ function BottomTab(){
       // }}
       // activeColor="black"
       // inactiveColor="#999"
-      barStyle={{backgroundColor:"#cc0000"}}
-      >
+      // barStyle={{backgroundColor:"#cc0000"}}
+      // >
         
         
-        <Tab.Screen
-        name="ToDoList"
-        component={Input}
-        // options={
-        //   {header: () => null}
-        // } 
-        />
-        <Tab.Screen
-        name="messages"
-        component={ReadPage}
-        />
-        <Tab.Screen
-        name="Mail"
-        component={ReadPage2}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+//         <Tab.Screen
+//         name="ToDoList"
+//         component={Input}
+//         // options={
+//         //   {header: () => null}
+//         // } 
+//         />
+//         <Tab.Screen
+//         name="messages"
+//         component={ReadPage}
+//         />
+//         <Tab.Screen
+//         name="Mail"
+//         component={ReadPage2}
+//         />
+//       </Tab.Navigator>
+//     </NavigationContainer>
     
-  )
-}
+//   )
+// }
 const Drawer= createDrawerNavigator();
 
 function App(){
@@ -256,7 +254,7 @@ function App(){
        >
     <Drawer.Screen
         name="Fokus"
-        component={ReadPage2}
+        component={Home}
         
         options={
           {

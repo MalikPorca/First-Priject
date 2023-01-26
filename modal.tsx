@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { SafeAreaView,Image, StyleSheet, Button, TextInput, Text, View, ScrollView, RefreshControl, TouchableOpacity, ToastAndroid, Pressable, Alert, Modal, ImageBackground  } from "react-native";
-import { Colors, Header } from "react-native/Libraries/NewAppScreen";
-// import { setTextRange } from 'typescript';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { StyleSheet, Button, View, ImageBackground  } from "react-native";
+
 
 
 
