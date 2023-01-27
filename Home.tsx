@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
-import {  Pressable, SafeAreaView,ImageBackground, StyleSheet, Text, View ,Button,} from "react-native";
+import React, { useState, useEffect } from 'react';
+import {  Pressable, SafeAreaView,ImageBackground,Image,Platform, StyleSheet, Text, View ,Button,} from "react-native";
 import StickyItemFlatList from '@gorhom/sticky-item';
 import CriptoValute from './modal';
 import {  Modal } from 'react-native-paper';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function Home ({navigation}, props)  {
 const  [click, setClick] = React.useState (false)
+const  [click2, setClick2] = React.useState (false)
 const  [Input, setInput] = React.useState (false)
 
 
@@ -19,12 +21,16 @@ const  [storyText, OnChangeStoryText] = React.useState ("");
 let [Post, setPost] = React.useState("");  
 const  [PostList, setPostList] = React.useState ([]);
 
-
+const [image, setImage] = React.useState(null);
+const [storyImage, setStoryImage] = React.useState([]);
 
 //--------------------dodavanje bouble-------------------------
   const onPressFunction1 = () =>{
       setClick(!click)
       
+  }
+  const bubleModal =()=>{
+    setClick2(!click2)
   }
 
   const InsertImage=()=> setInput(!Input)
@@ -47,6 +53,21 @@ const addPost =(Post)=>{
   PostList.push(Post)
    setPost(Post)
 }
+
+
+const izaberi = async ()=>{
+let result = await ImagePicker.launchImageLibraryAsync({
+  mediaTypes: ImagePicker.MediaTypeOptions.All,
+  allowsEditing: true,
+  aspect: [4,8],
+  quality:1,
+});
+if (!result.canceled){
+  setImage(result.assets[0].uri);
+  setStoryImage(image)
+  
+}
+};
 
     return(
 
@@ -71,7 +92,7 @@ const addPost =(Post)=>{
            </Pressable>
 
            {itemList.map((item, index)=>(
-            <Pressable onPress ={onPressFunction1}
+            <Pressable onPress ={bubleModal}
           >
             <Text style={styles.booble} key= {index}>
             </Text></Pressable>
@@ -98,7 +119,7 @@ const addPost =(Post)=>{
             style={styles.ImageStory}
             source={require("./assets/predavanje2.jpg")} 
             ></ImageBackground > */}
-            {storyText}
+            { <Image key={index} source={{uri: image }} style={{width:90, height:100,}}/>}
             </Text>
             </Pressable>
             ))}
@@ -118,7 +139,7 @@ const addPost =(Post)=>{
         </Text>
         
         {PostList.map((Post, index)=>(
-          <Text style={styles.text}  key={index}> {storyText} </Text>
+          <Text style={styles.text}  key={index}> <Image source={{uri: image }} style={{width:170, height:200}}/> </Text>
         ))}
 
       </View>
@@ -132,12 +153,26 @@ const addPost =(Post)=>{
         >
           <ImageBackground 
         style={styles.bcgImage}
-        source={require("./assets/predavanje3.jpg")}>
+        source={{uri: image }}>
           
          </ImageBackground>
          <CriptoValute
             cancel={onPressFunction1}/>
       </Modal> 
+
+      <Modal    
+        
+        visible={click2} 
+        >
+          <ImageBackground 
+        style={styles.bcgImage}
+        source={require("./assets/predavanje3.jpg")}>
+          
+         </ImageBackground>
+         <CriptoValute
+            cancel={bubleModal}/>
+      </Modal> 
+
       <Modal visible={Input} style={styles.inputPost}>
           <View >
             <TextInput
@@ -147,6 +182,7 @@ const addPost =(Post)=>{
             onChange={(e) => OnChangeStoryText(e.nativeEvent.text)}/> 
           </View>
           <Button title='save' onPress={addNewStory}/>
+          <Button title='izaberi sliku' onPress={izaberi}/>
         </Modal>
       </SafeAreaView>
   )
@@ -281,7 +317,9 @@ const addPost =(Post)=>{
       },
       blocktext:{
         backgroundColor:"#9595dd",
-        padding:9,
+        alignContent:"center",
+        alignItems:"flex-start",
+        padding:2,
         borderRadius:10,
         fontSize:12,
         color:"white",
