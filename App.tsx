@@ -155,11 +155,12 @@ ovo nisam uspio trebam malo ispitati
 
 // const Tab= createMaterialBottomTabNavigator();
 
-// function BottomTab(){
+// export function BottomTab(){
 //   return(
 //     <NavigationContainer>
-//        <Tab.Navigator useLegacyImplementation={true}
-//           screenOptions={({route})=>({
+//        <Tab.Navigator 
+//           useLegacyImplementation={true}
+//           screenOption={({route})=>({
 //         TabBarIcon:({focused, size, color})=>{
 //           let iconName;
 //           if (route.name==="ToDoList"){
@@ -189,15 +190,15 @@ ovo nisam uspio trebam malo ispitati
 //         }
 
 //       })} 
-      // TabBarOptions={{
-      //   activeBackgroundColor:"red",
-      //   showLabel:true,
-      //   labelStyle:{fontSize:12, color:"black"},
-      // }}
-      // activeColor="black"
-      // inactiveColor="#999"
-      // barStyle={{backgroundColor:"#cc0000"}}
-      // >
+//       TabBarOptions={{
+//         activeBackgroundColor:"red",
+//         showLabel:true,
+//         labelStyle:{fontSize:12, color:"black"},
+//       }}
+//       activeColor="black"
+//       inactiveColor="#999"
+//       barStyle={{backgroundColor:"#cc0000"}}
+//       >
         
         
 //         <Tab.Screen
@@ -213,7 +214,7 @@ ovo nisam uspio trebam malo ispitati
 //         />
 //         <Tab.Screen
 //         name="Mail"
-//         component={ReadPage2}
+//         component={Home}
 //         />
 //       </Tab.Navigator>
 //     </NavigationContainer>

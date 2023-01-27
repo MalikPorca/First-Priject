@@ -10,6 +10,7 @@ export default function Home ({navigation}, props)  {
 const  [click, setClick] = React.useState (false)
 const  [click2, setClick2] = React.useState (false)
 const  [Input, setInput] = React.useState (false)
+const  [Posts, setPosts] = React.useState (false)
 
 
 let [item, setItem] = React.useState("");  
@@ -35,6 +36,9 @@ const [storyImage, setStoryImage] = React.useState([]);
 
   const InsertImage=()=> setInput(!Input)
 
+   const insertPost = ()=>setPosts(!Posts)
+   
+ 
   const addNewBouble =(item)=>{
      itemList.push(item)
       setItem(item)
@@ -49,13 +53,15 @@ const [storyImage, setStoryImage] = React.useState([]);
         alert("Niste unijeli tekst ili sliku...")
         
       }
-    
-   
+
  }
 //------------------dodavanje texta------------------------------
-const addPost =(Post)=>{
-    PostList.push(Post)
-    setPost(Post)
+const addPost =()=>{
+
+    // PostList.push(Post)
+    setPostList(PostList, Post)
+    setPosts(!Posts)
+    setPost("")
 
 }
 
@@ -87,6 +93,7 @@ if (!result.canceled){
 
         <Pressable onPress ={addNewBouble}>
         <ImageBackground
+       
             style={styles.ImageBouble}
             source={require("./assets/fokus.png")} 
             >
@@ -97,9 +104,10 @@ if (!result.canceled){
            </Pressable>
 
            {itemList.map((item, index)=>(
-            <Pressable onPress ={bubleModal}
+            <Pressable onPress ={bubleModal} key={index}
           >
             <Text style={styles.booble} key= {index}>
+              
             </Text></Pressable>
 
 ))}
@@ -137,7 +145,7 @@ if (!result.canceled){
       <View style={styles.middle}>
     
         <Text style={styles.addtext}>
-          <Pressable onPress={addPost}>
+          <Pressable onPress={insertPost}>
             <Text style={[{color:"blue", fontSize:25, fontWeight:"bold", backgroundColor:"#ddddddff", borderRadius:10,marginLeft:2, marginRight:2,}]} >
               Add    
             </Text>
@@ -145,7 +153,7 @@ if (!result.canceled){
         </Text>
         
         {PostList.map((Post, index)=>(
-          <Text style={styles.text}  key={index}></Text>
+          <Text style={styles.text}  key={index}>{Post}</Text>
         ))}
 
       </View>
@@ -162,10 +170,11 @@ if (!result.canceled){
         source={{uri: image }} >
           
          </ImageBackground>
-         <Text style={[{ color:"black", fontSize:22, textAlign:"center", backgroundColor:"pink"}]}>{storyList.indexOf} </Text>
+         <Text style={[{ color:"black", fontSize:22, textAlign:"center", backgroundColor:"pink"}]} key={1}>{storyList[0]} </Text>
          <CriptoValute
             cancel={onPressFunction1}/>
       </Modal> 
+    
 
       <Modal    
         
@@ -193,6 +202,18 @@ if (!result.canceled){
           <Pressable  onPress={addNewStory}><Text style={styles.spremi}>Spremi</Text></Pressable>
           </View>
         </Modal>
+        <Modal visible={Posts} style={styles.inputPost}>
+          <View >
+            <TextInput
+            style={styles.Input}
+            placeholder={"   Današnja mudrost: "}
+            defaultValue={Post}
+            onChange={(e) => OnChangeStoryText(e.nativeEvent.text)}/> 
+          </View>
+          <View style={[{flexDirection:"row", justifyContent:"space-between"}]}>
+          <Pressable  onPress={addPost}><Text style={styles.spremi}>Spremi</Text></Pressable>
+          </View>
+        </Modal>
       </SafeAreaView>
   )
   }
@@ -200,7 +221,7 @@ if (!result.canceled){
   const styles = StyleSheet.create({
     text:{
         backgroundColor: '#fff',
-        color: "white",
+        color: "black",
         fontSize:18,
         padding:7,
         marginBottom: 10,

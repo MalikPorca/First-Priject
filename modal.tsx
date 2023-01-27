@@ -14,7 +14,7 @@ return(
     source={props.nesto}
     >
     </ImageBackground>
-    <View style={styles.footerbutton}>
+    <View style={styles.footerbutton} key={props.key}>
     <Button 
     title='OK'
     onPress={props.cancel}
