@@ -43,15 +43,20 @@ const [storyImage, setStoryImage] = React.useState([]);
   //------------------dodavanje story---------------------------
   function addNewStory(){
     let unos = storyText
-    storyList.push(unos)
-    setInput(!Input)
-    OnChangeStoryText(" ")
+    if(unos!="" && image!=null){storyList.push(unos)
+      setInput(!Input)
+      OnChangeStoryText(" ")} else{
+        alert("Niste unijeli tekst ili sliku...")
+        
+      }
+    
    
  }
 //------------------dodavanje texta------------------------------
 const addPost =(Post)=>{
-  PostList.push(Post)
-   setPost(Post)
+    PostList.push(Post)
+    setPost(Post)
+
 }
 
 
@@ -119,6 +124,7 @@ if (!result.canceled){
             style={styles.ImageStory}
             source={require("./assets/predavanje2.jpg")} 
             ></ImageBackground > */}
+            {storyText}
             { <Image key={index} source={{uri: image }} style={{width:90, height:100,}}/>}
             </Text>
             </Pressable>
@@ -139,7 +145,7 @@ if (!result.canceled){
         </Text>
         
         {PostList.map((Post, index)=>(
-          <Text style={styles.text}  key={index}> <Image source={{uri: image }} style={{width:170, height:200}}/> </Text>
+          <Text style={styles.text}  key={index}></Text>
         ))}
 
       </View>
@@ -153,9 +159,10 @@ if (!result.canceled){
         >
           <ImageBackground 
         style={styles.bcgImage}
-        source={{uri: image }}>
+        source={{uri: image }} >
           
          </ImageBackground>
+         <Text style={[{ color:"black", fontSize:22, textAlign:"center", backgroundColor:"pink"}]}>{storyList.indexOf} </Text>
          <CriptoValute
             cancel={onPressFunction1}/>
       </Modal> 
@@ -181,8 +188,10 @@ if (!result.canceled){
             defaultValue={storyText}
             onChange={(e) => OnChangeStoryText(e.nativeEvent.text)}/> 
           </View>
-          <Button title='save' onPress={addNewStory}/>
-          <Button title='izaberi sliku' onPress={izaberi}/>
+          <View style={[{flexDirection:"row", justifyContent:"space-between"}]}>
+          <Pressable  onPress={izaberi}><Text style={styles.slika}>Slika</Text></Pressable>
+          <Pressable  onPress={addNewStory}><Text style={styles.spremi}>Spremi</Text></Pressable>
+          </View>
         </Modal>
       </SafeAreaView>
   )
@@ -205,6 +214,16 @@ if (!result.canceled){
          borderBottomWidth:2,
           borderRightWidth:2,
           borderLeftWidth:2,
+      },
+      spremi:{
+        color:"blue",
+        fontSize:18,
+        marginRight:10,
+      },
+      slika:{
+        color:"blue",
+        fontSize:18,
+        marginLeft:10
       },
       inputPost:{
         width:250,
