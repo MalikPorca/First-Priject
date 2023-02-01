@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, Button, View, ImageBackground  } from "react-native";
-
-
-
-
 function CriptoValute (props) {
 const[showCripto, setShowCripto]= React.useState(false);
 const cancel = ()=> setShowCripto(!showCripto)
