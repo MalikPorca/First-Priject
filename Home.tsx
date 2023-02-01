@@ -59,7 +59,7 @@ const [storyImage, setStoryImage] = React.useState([]);
 const addPost =()=>{
 
     // PostList.push(Post)
-    setPostList(PostList, Post)
+    setPostList([...PostList, Post])
     setPosts(!Posts)
     setPost("")
 
@@ -75,7 +75,7 @@ let result = await ImagePicker.launchImageLibraryAsync({
 });
 if (!result.canceled){
   setImage(result.assets[0].uri);
-  setStoryImage(image)
+  setStoryImage(result.assets)
   
 }
 };
@@ -193,7 +193,7 @@ if (!result.canceled){
           <View >
             <TextInput
             style={styles.Input}
-            placeholder={"   Današnja mudrost: "}
+            placeholder={"   Danasnji story: "}
             defaultValue={storyText}
             onChange={(e) => OnChangeStoryText(e.nativeEvent.text)}/> 
           </View>
@@ -205,12 +205,14 @@ if (!result.canceled){
         <Modal visible={Posts} style={styles.inputPost}>
           <View >
             <TextInput
-            style={styles.Input}
-            placeholder={"   Današnja mudrost: "}
+            style={styles.InputText}
+            placeholder={"   O cemu razmisljate: "}
             defaultValue={Post}
-            onChange={(e) => OnChangeStoryText(e.nativeEvent.text)}/> 
+            onChange={(e) => setPost(e.nativeEvent.text)}/> 
           </View>
           <View style={[{flexDirection:"row", justifyContent:"space-between"}]}>
+
+          <Pressable ><Text style={styles.spremi}>Slika</Text></Pressable>
           <Pressable  onPress={addPost}><Text style={styles.spremi}>Spremi</Text></Pressable>
           </View>
         </Modal>
@@ -263,6 +265,15 @@ if (!result.canceled){
         borderColor:"black",
         borderRadius:10,
         marginBottom:20,
+        alignItems:"flex-start"
+      },
+      InputText:{
+        width:220,
+        height:60,
+        borderWidth:1,
+        borderColor:"black",
+        borderRadius:10,
+        marginBottom:220,
         alignItems:"flex-start"
       },
       addtext:{
