@@ -25,21 +25,17 @@ const  [PostList, setPostList] = React.useState ([]);
 const [image, setImage] = React.useState(null);
 const [storyImage, setStoryImage] = React.useState([]);
 
-//--------------------dodavanje bouble-------------------------
-  const onPressFunction1 = () =>{
-      setClick(!click)
-      
-  }
-  const bubleModal =()=>{
-    setClick2(!click2)
-  }
+const onPressFunction1 = (index) =>setClick(!click)
 
-  const InsertImage=()=> setInput(!Input)
+const bubbleModal =()=>setClick2(!click2)
 
-   const insertPost = ()=>setPosts(!Posts)
-   
- 
-  const addNewBouble =(item)=>{
+const InsertImage=()=> setInput(!Input)
+
+const insertPost = ()=>setPosts(!Posts)
+
+//--------------------dodavanje bubble-------------------------
+
+  const addNewbubble =(item)=>{
      itemList.push(item)
       setItem(item)
   }
@@ -50,23 +46,19 @@ const [storyImage, setStoryImage] = React.useState([]);
     if(unos!="" && image!=null){storyList.push(unos)
       setInput(!Input)
       OnChangeStoryText(" ")} else{
-        alert("Niste unijeli tekst ili sliku...")
-        
+        alert("Niste unijeli tekst ili sliku...")       
       }
-
  }
 //------------------dodavanje texta------------------------------
 const addPost =()=>{
-
     // PostList.push(Post)
     setPostList([...PostList, Post])
     setPosts(!Posts)
     setPost("")
-
 }
 
 
-const izaberi = async ()=>{
+const ChoosePhoto = async ()=>{
 let result = await ImagePicker.launchImageLibraryAsync({
   mediaTypes: ImagePicker.MediaTypeOptions.All,
   allowsEditing: true,
@@ -76,45 +68,29 @@ let result = await ImagePicker.launchImageLibraryAsync({
 if (!result.canceled){
   setImage(result.assets[0].uri);
   setStoryImage(result.assets)
-  
-}
-};
+  }};
 
-    return(
+ 
+{/*----------------------DODAVANJE bubble-SA-----------------------  */}
+return(
 
-      <SafeAreaView>
-        
-      
-{/*----------------------DODAVANJE BOUBLE-SA-----------------------  */}
-        
-        <ScrollView horizontal={true} style={[{height:110,width:"94%",marginLeft:"3%",borderRadius:10, backgroundColor:"white", borderBottomWidth:3, borderColor:"#dddddd90",}]}>
+  <SafeAreaView>
+      <ScrollView horizontal={true} style={[{height:110,width:"94%",marginLeft:"3%",borderRadius:10, backgroundColor:"white", borderBottomWidth:3, borderColor:"#dddddd90",}]}>
        
-       
-
-        <Pressable onPress ={addNewBouble}>
-        <ImageBackground
-       
-            style={styles.ImageBouble}
-            source={require("./assets/fokus.png")} 
-            >
-        <Text style={[{fontSize:20, color:"white", textAlign:"center", margin:9,}]}>
-
-        </Text>
-        </ImageBackground>
-           </Pressable>
+        <Pressable onPress ={addNewbubble}>
+          <ImageBackground style={styles.Imagebubble} source={require("./assets/fokus.png")}>
+             <Text style={[{fontSize:20, color:"white", textAlign:"center", margin:9,}]}></Text>
+          </ImageBackground>
+        </Pressable>
 
            {itemList.map((item, index)=>(
-            <Pressable onPress ={bubleModal} key={index}
-          >
-            <Text style={styles.booble} key= {index}>
-              
-            </Text></Pressable>
+            <Pressable onPress ={bubbleModal} key={index}>
+               <Text style={styles.booble} key= {index}></Text>
+            </Pressable>))}
+      </ScrollView>
 
-))}
-   
 {/*----------------------DODAVANJE STORY-JA--------------------------  */}
-
-        </ScrollView>
+       
         <ScrollView>
       <View style={styles.middle}>
             <View>
@@ -140,6 +116,7 @@ if (!result.canceled){
     
       </ScrollView>
       </View>
+      
 {/*----------------------DODAVANJE POSTOVA------------------------------  */}
 
       <View style={styles.middle}>
@@ -161,50 +138,40 @@ if (!result.canceled){
       </View>
       </ScrollView>
     
-      <Modal    
-        
-        visible={click} 
-        >
-          <ImageBackground 
-        style={styles.bcgImage}
-        source={{uri: image }} >
-          
-         </ImageBackground>
-         <Text style={[{ color:"black", fontSize:22, textAlign:"center", backgroundColor:"pink"}]} key={1}>{storyList[0]} </Text>
-         <CriptoValute
-            cancel={onPressFunction1}/>
+      <Modal visible={click}>
+          <ImageBackground style={styles.bcgImage} source={{uri: image }}></ImageBackground>
+         <Text style={[{ color:"black", fontSize:22, textAlign:"center", backgroundColor:"#5050ff"}]} key={1}>{storyList} </Text>
+         <CriptoValute cancel={onPressFunction1}/>
       </Modal> 
     
 
-      <Modal    
-        
-        visible={click2} 
-        >
-          <ImageBackground 
-        style={styles.bcgImage}
-        source={require("./assets/predavanje3.jpg")}>
-          
-         </ImageBackground>
-         <CriptoValute
-            cancel={bubleModal}/>
+      <Modal visible={click2}>
+          <ImageBackground style={styles.bcgImage} source={require("./assets/predavanje3.jpg")}></ImageBackground>
+         <CriptoValute cancel={bubbleModal}/>
       </Modal> 
+
 
       <Modal visible={Input} style={styles.inputPost}>
           <View >
             <TextInput
+            numberOfLines={5}
+            multiline={true}
             style={styles.Input}
             placeholder={"   Danasnji story: "}
             defaultValue={storyText}
             onChange={(e) => OnChangeStoryText(e.nativeEvent.text)}/> 
           </View>
           <View style={[{flexDirection:"row", justifyContent:"space-between"}]}>
-          <Pressable  onPress={izaberi}><Text style={styles.slika}>Slika</Text></Pressable>
+          <Pressable  onPress={ChoosePhoto}><Text style={styles.slika}>Slika</Text></Pressable>
           <Pressable  onPress={addNewStory}><Text style={styles.spremi}>Spremi</Text></Pressable>
           </View>
         </Modal>
+
+
         <Modal visible={Posts} style={styles.inputPost}>
           <View >
             <TextInput
+            multiline={true}
             style={styles.InputText}
             placeholder={"   O cemu razmisljate: "}
             defaultValue={Post}
@@ -224,13 +191,13 @@ if (!result.canceled){
     text:{
         backgroundColor: '#fff',
         color: "black",
-        fontSize:18,
-        padding:7,
+        fontSize:16,
+        padding:9,
         marginBottom: 10,
         width: "100%", 
         height: 240, 
         borderRadius:10,
-        textAlign: "center" , 
+        textAlign:'justify' , 
         alignItems:"center" ,
         flexDirection:'row',
         borderColor:"#dddddd90",
@@ -260,11 +227,12 @@ if (!result.canceled){
       },
       Input:{
         width:220,
-        height:300,
+        height:60,
         borderWidth:1,
         borderColor:"black",
+        backgroundColor:"#ddddffaa",
         borderRadius:10,
-        marginBottom:20,
+        marginBottom:220,
         alignItems:"flex-start"
       },
       InputText:{
@@ -295,7 +263,7 @@ if (!result.canceled){
             borderLeftWidth:2,
         
       },
-      ImageBouble:{
+      Imagebubble:{
         
         height:50,
         width:50,
