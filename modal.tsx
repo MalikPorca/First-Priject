@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Button, View, ImageBackground  } from "react-native";
+
 function CriptoValute (props) {
 const[showCripto, setShowCripto]= React.useState(false);
 const cancel = ()=> setShowCripto(!showCripto)
@@ -27,7 +28,7 @@ return(
            footerbutton:{
             width:100,
             marginLeft:133,
-            marginBottom:270
+            marginTop:2
              
            },
            

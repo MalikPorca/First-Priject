@@ -4,20 +4,17 @@
   import Home from './Home';
   import ReadPage from './News';
   import { createDrawerNavigator } from '@react-navigation/drawer';
-  import { NavigationContainer } from '@react-navigation/native';
   import {ToDoList} from './ToDo';
    const Drawer= createDrawerNavigator();
-   import { BottomTab } from './BottomTab';
 
    export function SideMenu(){
-
      return(
-   
-  
    <Drawer.Navigator 
        initialRouteName='Fokus'
        useLegacyImplementation={true}
+       
        screenOptions={{
+        headerShown:false,
         overlayColor:"#0000ff80", 
         swipeEdgeWidth:100,
         drawerActiveBackgroundColor:"#5099ff",

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {  Pressable, SafeAreaView,ImageBackground,Image,Platform, StyleSheet, Text, View ,Button,} from "react-native";
-import StickyItemFlatList from '@gorhom/sticky-item';
 import CriptoValute from './modal';
 import {  Modal } from 'react-native-paper';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
@@ -70,12 +69,14 @@ if (!result.canceled){
   setStoryImage(result.assets)
   }};
 
- 
+//  useEffect(() =>{
+// alert("skkancld")
+//  })[1]
 {/*----------------------DODAVANJE bubble-SA-----------------------  */}
 return(
 
   <SafeAreaView>
-      <ScrollView horizontal={true} style={[{height:110,width:"94%",marginLeft:"3%",borderRadius:10, backgroundColor:"white", borderBottomWidth:3, borderColor:"#dddddd90",}]}>
+      <ScrollView horizontal={true} style={[{height:110,width:"94%",marginLeft:"3%",borderRadius:10, backgroundColor:"white", borderBottomWidth:3, borderColor:"#dddddd90",marginTop:"13%"}]}>
        
         <Pressable onPress ={addNewbubble}>
           <ImageBackground style={styles.Imagebubble} source={require("./assets/fokus.png")}>
@@ -245,13 +246,11 @@ return(
         alignItems:"flex-start"
       },
       addtext:{
-       
           backgroundColor: '#fff',
           color: "white",
           fontSize:18,
           padding:7,
           marginBottom: 10,
-        
           height: 50, 
           borderRadius:10,
           textAlign: "left" , 
