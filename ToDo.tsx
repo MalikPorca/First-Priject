@@ -22,15 +22,18 @@ export function ToDoList  ({navigation})  {
     if(text==" ")ToastAndroid.show("Empty task, please write something",ToastAndroid.SHORT) 
      else null
    onChangeText(" ");
-   setPressed(!pressed);
+   
       
     }
      
    
   
   
-      const showEdit=()=>{
-       navigation.navigate("messages");
+      const Edit=(index:number)=>{
+        setPressed(!pressed)
+        onChangeText(toDoList[index])
+        toDoList[index]=text
+        
       }
   //Brisaje cijele liste
       const clearAll=(i:number)=>setToDoList([])
@@ -69,7 +72,7 @@ export function ToDoList  ({navigation})  {
          <View>
           
          <Button
-         title='edit'
+         title={pressed? 'edit': 'save'}
          color={"#d40202"}
          onPress={submit}
          /></View>
@@ -92,9 +95,9 @@ export function ToDoList  ({navigation})  {
   <View style={styles.button}>
             <Button 
              key={index}
-             title='Edit'
+             title={pressed? 'save': 'edit'}
              color={"#e60404"} 
-             onPress={showEdit}/>
+             onPress={()=>Edit(index)}/>
           </View>
         
         </View>
